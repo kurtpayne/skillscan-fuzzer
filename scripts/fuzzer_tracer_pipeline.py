@@ -443,12 +443,14 @@ def main() -> None:
     if args.trace:
         log.info("Running trace batch on Modal...")
         trace_script = args.trace_script or (
-            Path(__file__).parent.parent.parent / "skillscan-trace" / "scripts" / "modal_trace_batch.py"
+            Path(__file__).parent.parent.parent
+            / "skillscan-trace"
+            / "scripts"
+            / "modal_trace_batch.py"
         )
         if not trace_script.exists():
             log.error(
-                "skillscan-trace script not found at %s. "
-                "Pass --trace-script to specify the path.",
+                "skillscan-trace script not found at %s. Pass --trace-script to specify the path.",
                 trace_script,
             )
             sys.exit(1)
