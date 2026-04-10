@@ -25,6 +25,7 @@ classifiers = [
 dependencies = [
     "click>=8.1.0",
     "openai>=1.30.0",
+    "requests>=2.28.0",
 ]
 
 [project.urls]
@@ -38,6 +39,7 @@ dev = [
     "pytest-cov>=5.0.0",
     "ruff>=0.4.4",
     "pre-commit>=3.0.0",
+    "mypy>=1.10.0",
 ]
 
 [project.scripts]
@@ -58,6 +60,13 @@ target-version = "py311"
 [tool.ruff.lint]
 select = ["E", "F", "I", "W", "UP"]
 ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+disable_error_code = ["import-untyped"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

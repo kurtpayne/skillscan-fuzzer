@@ -27,7 +27,13 @@ import sys
 
 import click
 
-from fuzzer import STRATEGIES, LLMClient, SkillFuzzer, load_seeds
+try:
+    from fuzzer import STRATEGIES, LLMClient, SkillFuzzer, load_seeds
+except ImportError:
+    # When running directly (python cli.py) from outside the package directory,
+    # resolve the sibling module relative to this file's location.
+    sys.path.insert(0, str(pathlib.Path(__file__).parent))
+    from fuzzer import STRATEGIES, LLMClient, SkillFuzzer, load_seeds
 
 
 def _setup_logging(verbose: bool) -> None:
@@ -60,7 +66,7 @@ def _setup_logging(verbose: bool) -> None:
     "--seed-dir",
     type=click.Path(exists=True, file_okay=False, path_type=pathlib.Path),
     default=None,
-    help="Directory of seed SKILL.md files. Auto-detected from corpus if omitted.",
+    help="Directory of seed SKILL.md files. Required if --seed-file is not provided.",
 )
 @click.option(
     "--seed-file",

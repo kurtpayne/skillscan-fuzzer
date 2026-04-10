@@ -112,9 +112,9 @@ class LLMClient:
         # Lazy import so the fuzzer works without openai installed if using
         # a raw HTTP fallback.
         try:
-            from openai import OpenAI  # type: ignore
+            from openai import OpenAI  # type: ignore[import-untyped]
 
-            self._client = OpenAI(api_key=self.api_key, base_url=self.base_url)
+            self._client: OpenAI | None = OpenAI(api_key=self.api_key, base_url=self.base_url)
             self._use_openai_sdk = True
         except ImportError:
             self._client = None
@@ -141,6 +141,7 @@ class LLMClient:
 
     def _complete_once(self, system_prompt: str, user_message: str) -> str:
         if self._use_openai_sdk:
+            assert self._client is not None
             resp = self._client.chat.completions.create(
                 model=self.model,
                 messages=[
@@ -175,7 +176,9 @@ class LLMClient:
         }
         r = requests.post(url, json=payload, headers=headers, timeout=self.timeout)
         r.raise_for_status()
-        return r.json()["choices"][0]["message"]["content"]
+        data: dict = r.json()
+        result: str = data["choices"][0]["message"]["content"]
+        return result
 
 
 # ---------------------------------------------------------------------------
@@ -251,7 +254,8 @@ def run_skillscan(skill_path: pathlib.Path, sarif: bool = True) -> dict | None:
         )
         if sarif and result.stdout.strip():
             try:
-                return json.loads(result.stdout)
+                parsed: dict = json.loads(result.stdout)
+                return parsed
             except json.JSONDecodeError:
                 logger.debug("skillscan output was not valid JSON: %s", result.stdout[:200])
                 return {"runs": [{"results": []}]}
