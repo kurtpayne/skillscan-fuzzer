@@ -3,11 +3,11 @@
 [![CI](https://github.com/kurtpayne/skillscan-fuzzer/actions/workflows/ci.yml/badge.svg)](https://github.com/kurtpayne/skillscan-fuzzer/actions/workflows/ci.yml)
 [![PyPI version](https://img.shields.io/pypi/v/skillscan-fuzzer.svg)](https://pypi.org/project/skillscan-fuzzer/)
 [![Python](https://img.shields.io/pypi/pyversions/skillscan-fuzzer.svg)](https://pypi.org/project/skillscan-fuzzer/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
 **M19 — LLM-powered adversarial SKILL.md variant generator**
 
-`skill-fuzzer` generates adversarial variants of AI skill files to probe the detection boundaries of `skillscan`. It uses an OpenAI-compatible LLM API (GPT-4.1-mini by default, or any local Ollama model) to apply semantic mutations to seed skill files, producing variants with unified diffs and optional scan results.
+`skillscan-fuzzer` generates adversarial variants of AI skill files to probe the detection boundaries of `skillscan`. It uses an OpenAI-compatible LLM API (GPT-4.1-mini by default, or any local Ollama model) to apply semantic mutations to seed skill files, producing variants with unified diffs and optional scan results.
 
 The fuzzer is the controlled-input complement to the public scan feed (M14): instead of scanning skills found in the wild, it generates skills designed to stress-test the scanner's static rules and ML model. The output feeds directly into `skillscan-trace` (M18) for behavioral verification.
 
@@ -34,22 +34,22 @@ pip install -e ".[dev]"
 
 ```bash
 # Fuzz 5 variants of each malicious seed using evasion strategy
-skill-fuzzer --strategy evasion --variants 5 --seed-dir path/to/corpus/adversarial
+skillscan-fuzzer --strategy evasion --variants 5 --seed-dir path/to/corpus/adversarial
 
 # Fuzz a specific seed with injection strategy and run skillscan on each variant
-skill-fuzzer --strategy injection \
+skillscan-fuzzer --strategy injection \
              --seed-file path/to/corpus/benign/gh_example.md \
              --scan
 
 # Use a local Ollama endpoint (no API key needed)
-skill-fuzzer --strategy obfuscation \
+skillscan-fuzzer --strategy obfuscation \
              --model llama3.1:8b \
              --base-url http://localhost:11434/v1 \
              --api-key ollama \
              --seed-dir path/to/seeds
 
 # Dry run to verify output structure without making LLM calls
-skill-fuzzer --strategy evasion --dry-run --variants 2 --seed-dir path/to/seeds
+skillscan-fuzzer --strategy evasion --dry-run --variants 2 --seed-dir path/to/seeds
 ```
 
 Seeds are not bundled — use [skillscan-corpus](https://github.com/kurtpayne/skillscan-corpus) or provide your own.
@@ -103,7 +103,7 @@ The `summary.json` contains:
 ## CLI Reference
 
 ```
-Usage: skill-fuzzer [OPTIONS]
+Usage: skillscan-fuzzer [OPTIONS]
 
 Options:
   -s, --strategy [evasion|injection|benign_drift|obfuscation|authority]

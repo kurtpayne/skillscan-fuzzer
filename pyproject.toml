@@ -7,14 +7,14 @@ name = "skillscan-fuzzer"
 version = "0.1.0"
 description = "LLM-powered adversarial skill file fuzzer for skillscan-security"
 readme = "README.md"
-license = { text = "MIT" }
+license = { text = "Apache-2.0" }
 requires-python = ">=3.11"
 keywords = ["security", "ai", "llm", "fuzzing", "red-team", "mcp", "skill"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Intended Audience :: Information Technology",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -43,6 +43,7 @@ dev = [
 ]
 
 [project.scripts]
+skillscan-fuzzer = "cli:main"
 skill-fuzzer = "cli:main"
 
 [tool.hatch.build.targets.wheel]

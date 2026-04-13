@@ -227,7 +227,6 @@ def unified_diff(original: str, variant: str, seed_name: str, variant_index: int
         var_lines,
         fromfile=f"{seed_name} (original)",
         tofile=f"{seed_name} (variant_{variant_index:03d})",
-        lineterm="",
     )
     return "".join(diff)
 

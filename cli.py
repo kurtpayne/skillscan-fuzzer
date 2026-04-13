@@ -1,22 +1,22 @@
 """
-skill-fuzzer CLI — M19
+skillscan-fuzzer CLI — M19
 ======================
 Usage:
-  skill-fuzzer [OPTIONS]
+  skillscan-fuzzer [OPTIONS]
 
 Examples:
   # Fuzz 3 variants of each malicious seed using evasion strategy
-  skill-fuzzer --strategy evasion --variants 3
+  skillscan-fuzzer --strategy evasion --variants 3
 
   # Fuzz a specific seed file with injection strategy and run skillscan on each variant
-  skill-fuzzer --strategy injection --seed-file corpus/benign/gh_example.md --scan
+  skillscan-fuzzer --strategy injection --seed-file corpus/benign/gh_example.md --scan
 
   # Use a local Ollama endpoint instead of OpenAI
-  skill-fuzzer --strategy obfuscation --model llama3.1:8b \\
+  skillscan-fuzzer --strategy obfuscation --model llama3.1:8b \\
                --base-url http://localhost:11434/v1 --api-key ollama
 
   # Dry run (no LLM calls) to verify output structure
-  skill-fuzzer --strategy evasion --dry-run --variants 2
+  skillscan-fuzzer --strategy evasion --dry-run --variants 2
 """
 
 from __future__ import annotations
